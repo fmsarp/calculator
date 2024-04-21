@@ -2,6 +2,19 @@ const calculatorDisplay = document.querySelector("h1");
 const inputBtns = document.querySelectorAll("button");
 const clearBtn = document.getElementById("clear-btn");
 
+// calculate first and second values depending on operator
+const calculate = {
+    '/': (firstNumber, secondNumber) => firstNumber / secondNumber,
+
+    '*': (firstNumber, secondNumber) => firstNumber * secondNumber,
+
+    '+': (firstNumber, secondNumber) => firstNumber + secondNumber,
+
+    '-': (firstNumber, secondNumber) => firstNumber - secondNumber,
+
+    '=': (firstNumber, secondNumber) => secondNumber,
+};
+
 let firstValue = 0;
 let operatorValue = "";
 let awaitingNextValue = false;
@@ -28,19 +41,6 @@ function addDeciaml() {
     }
 }
 
-// calculate first and second values depending on operator
-const calculate = {
-    '/': (firstNumber, secondNumber) => firstNumber / secondNumber,
-
-    '*': (firstNumber, secondNumber) => firstNumber * secondNumber,
-
-    '+': (firstNumber, secondNumber) => firstNumber + secondNumber,
-
-    '-': (firstNumber, secondNumber) => firstNumber - secondNumber,
-
-    '=': (firstNumber, secondNumber) => secondNumber,
-}
-
 function useOperator(operator) {
     const currentValue = Number(calculatorDisplay.textContent);
     // prevent muliple operators
@@ -61,6 +61,14 @@ function useOperator(operator) {
     operatorValue = operator;
 }
 
+// reset all values, display
+function resetAll() {
+    firstValue = 0;
+    operatorValue = "";
+    awaitingNextValue = false;
+    calculatorDisplay.textContent = "0";
+}
+
 // add event listners for numbers, operators, decimal buttons
 inputBtns.forEach((inputBtn) => {
     if (inputBtn.classList.length === 0) {
@@ -71,14 +79,6 @@ inputBtns.forEach((inputBtn) => {
         inputBtn.addEventListener("click", () => addDeciaml());
     }
 });
-
-// reset all values, display
-function resetAll() {
-    firstValue = 0;
-    operatorValue = "";
-    awaitingNextValue = false;
-    calculatorDisplay.textContent = "0";
-}
 
 // event listener
 clearBtn.addEventListener("click", resetAll);
